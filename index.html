@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Productivity Dashboard</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+
+<nav>
+  <div class="nav-brand">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+      <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+    </svg>
+    <span>ProDash</span>
+  </div>
+
+  <div class="nav-tabs" role="tablist">
+    <button class="nav-tab active" data-section="todo"       role="tab"> To-Do</button>
+    <button class="nav-tab"        data-section="planner"    role="tab"> Planner</button>
+    <button class="nav-tab"        data-section="countdown"  role="tab">Countdown</button>
+    <button class="nav-tab"        data-section="stopwatch"  role="tab">Stopwatch</button>
+  </div>
+
+  <button class="theme-toggle" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode"></button>
+</nav>
+
+
+<main>
+
+ 
+  <section id="todo" class="section active">
+    <div class="section-title">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      To-Do List
+    </div>
+    <div class="card">
+      <div class="todo-input-row">
+        <input type="text" id="todoInput" placeholder="Add a new task" maxlength="120"/>
+        <button class="btn-primary" id="todoAddBtn">Add</button>
+      </div>
+      <div class="todo-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="active">Active</button>
+        <button class="filter-btn" data-filter="done">Completed</button>
+      </div>
+      <ul class="todo-list" id="todoList"></ul>
+      <div class="todo-stats" id="todoStats"></div>
+    </div>
+  </section>
+
+ 
+  <section id="planner" class="section">
+    <div class="section-title">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Task Planner
+    </div>
+    <div class="planner-grid">
+     
+      <div class="card">
+        <div class="form-group">
+          <label class="form-label">Task Name</label>
+          <input type="text" id="plannerName" class="form-input" placeholder="Enter task name" maxlength="80"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <input type="text" id="plannerDesc" class="form-input" placeholder="Optional description" maxlength="160"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Due Date</label>
+          <input type="date" id="plannerDate" class="form-input"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Priority</label>
+          <select id="plannerPriority" class="form-input">
+            <option value="high"> High</option>
+            <option value="medium" selected> Medium</option>
+            <option value="low"> Low</option>
+          </select>
+        </div>
+        <button class="btn-primary" id="plannerAddBtn" style="width:100%;">Schedule Task</button>
+      </div>
+
+      <!-- Task List -->
+      <div class="card" style="overflow:hidden;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:8px;flex-wrap:wrap;">
+          <strong style="font-size:.95rem;">Scheduled Tasks</strong>
+          <select id="plannerSort" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text);font-size:.82rem;">
+            <option value="date">Sort by Date</option>
+            <option value="priority">Sort by Priority</option>
+          </select>
+        </div>
+        <div class="task-list" id="plannerList"></div>
+        <div class="task-empty" id="plannerEmpty" style="display:none;">No tasks scheduled yet.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- â•â• 3. COUNTDOWN TIMER â•â• -->
+  <section id="countdown" class="section">
+    <div class="section-title">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Countdown Timer
+    </div>
+    <div class="card timer-card">
+      <div class="timer-label-row">
+        <input type="text" id="timerLabel" class="timer-label-input" placeholder="Timer label (e.g. Pomodoro)" maxlength="40"/>
+      </div>
+
+      <svg class="progress-ring" width="200" height="200" viewBox="0 0 200 200">
+        <circle class="progress-track" cx="100" cy="100" r="88"/>
+        <circle class="progress-fill"  cx="100" cy="100" r="88" id="progressFill"
+          stroke-dasharray="553" stroke-dashoffset="0"/>
+      </svg>
+
+      <div class="timer-display" id="timerDisplay">00:00:00</div>
+
+      <div class="timer-inputs" id="timerInputs">
+        <div class="timer-input-group">
+          <label>Hours</label>
+          <input type="number" id="timerHours"   min="0" max="23"  value="0" placeholder="0"/>
+        </div>
+        <div class="timer-input-group">
+          <label>Minutes</label>
+          <input type="number" id="timerMinutes" min="0" max="59"  value="25" placeholder="0"/>
+        </div>
+        <div class="timer-input-group">
+          <label>Seconds</label>
+          <input type="number" id="timerSeconds" min="0" max="59"  value="0" placeholder="0"/>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn-lg btn-start" id="timerStartBtn">Start</button>
+        <button class="btn-lg btn-pause" id="timerPauseBtn" style="display:none;">Pause</button>
+        <button class="btn-lg btn-reset" id="timerResetBtn">Reset</button>
+      </div>
+      <div class="timer-status" id="timerStatus"></div>
+    </div>
+  </section>
+
+  
+  <section id="stopwatch" class="section">
+    <div class="section-title">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="9"/><polyline points="12 8 12 13"/><path d="M9 2h6"/><path d="M19.07 4.93l-1.41 1.41"/></svg>
+      Stopwatch
+    </div>
+    <div class="card stopwatch-card">
+      <div class="sw-display" id="swDisplay">00:00:00.00</div>
+      <div class="btn-group">
+        <button class="btn-lg btn-start" id="swStartBtn">Start</button>
+        <button class="btn-lg btn-pause" id="swPauseBtn" style="display:none;">Pause</button>
+        <button class="btn-lg" id="swLapBtn"
+          style="background:#0ea5e9;color:#fff;display:none;">Lap</button>
+        <button class="btn-lg btn-reset" id="swResetBtn">Reset</button>
+      </div>
+
+      <div id="lapContainer" style="display:none;">
+        <div class="lap-header">
+          <span>Lap</span><span>Split</span><span>Total</span>
+        </div>
+        <div class="lap-list" id="lapList"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
